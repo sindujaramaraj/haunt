@@ -5,7 +5,7 @@ var smtpTransport = mailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "hauntmailer@gmail.com",
-        pass: "xxxxx"
+        pass: "xxxxxxx"
     }
 });
 

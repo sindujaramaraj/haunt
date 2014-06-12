@@ -1,0 +1,8 @@
+{
+	"email": "sinduja_psg@hotmail.com",
+	"author": "Sinduja Ramaraj" ,
+	"name": "haunt",
+	"dependencies": {
+		"nodemailer": "0.6.x"
+	}
+}

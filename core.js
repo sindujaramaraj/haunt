@@ -7,29 +7,36 @@ var site,
 	email,
 	client,
 	request;
-for (var idx = 0, len = input.length; idx < len; idx++) {
-	site = input[idx].site;
-	track = input[idx].track;
-	email = input[idx].email;
-	
-	request = http.request({
-		host: site,
-		path: '/'
-	}, function(res) {
-		var data = '';
-		res.on('data', function(chunk) {
-			data = data + chunk;
+
+queryPages();
+
+setInterval(queryPages, 24*60*60*1000);
+
+function queryPages() {
+	for (var idx = 0, len = input.length; idx < len; idx++) {
+		site = input[idx].site;
+		track = input[idx].track;
+		email = input[idx].email;
+		
+		request = http.request({
+			host: site,
+			path: '/'
+		}, function(res) {
+			var data = '';
+			res.on('data', function(chunk) {
+				data = data + chunk;
+			});
+			
+			res.on('end', function() {
+				process(data, track, email, site);
+			});
 		});
 		
-		res.on('end', function() {
-			process(data, track, email, site);
+		request.on('error', function(err) {
+			console.log(err);
 		});
-	});
-	
-	request.on('error', function(err) {
-		console.log(err);
-	});
-	request.end();
+		request.end();
+	}
 }
 
 function process(data, text, email, site) {
